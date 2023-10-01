@@ -1,0 +1,38 @@
+﻿@model WeatherApiResponse
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Weather</h1>
+
+<div class="container">
+    @if (@ViewBag.error != null)
+    {
+        <h1 class="text-danger">@ViewBag.error</h1>
+    }
+    else if (!string.IsNullOrWhiteSpace(@ViewBag.searchWeather))
+    {
+        <div class="card mb-3" style="max-width: 300px;">
+            <div class="row g-0">
+            @foreach (Weather item in Model.weather)
+            {
+                <div class="col-md-4">
+                        <img class="img-fluid rounded-start" src="https://openweathermap.org/img/wn/@(item.icon).png" width="100" height="100">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.name</h5>
+                            <h5 class="card-title">@Math.Round(@Model.main.temp) °</h5>
+                        <p class="card-text">@item.description</p>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Not results</p>
+    }
+</div>
+

@@ -1,0 +1,40 @@
+﻿@model WeatherApiResponse
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Weather search</h1>
+    <form asp-action="Search" asp-controller="Home" method="get" class="input-group mb-3">
+        <input required name="title" type="text" class="form-control" placeholder="Title" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+    </form>
+</div>
+
+<div class="container">
+    <h1 class="display-4">History</h1>
+    @if (@ViewBag.cache == true)
+    {
+        <div class="card mb-3" style="max-width: 300px;">
+            <div class="row g-0">
+                @foreach (Weather item in Model.weather)
+                {
+                    <div class="col-md-4">
+                        <img class="img-fluid rounded-start" src="https://openweathermap.org/img/wn/@(item.icon).png" width="100" height="100">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@Model.name</h5>
+                            <h5 class="card-title">@Math.Round(@Model.main.temp) °</h5>
+                            <p class="card-text">@item.description</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="card-text">Not found</p>
+    }
+</div>
